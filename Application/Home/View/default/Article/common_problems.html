@@ -1,0 +1,74 @@
+<include file="Public:header"/>
+<style>/**/
+    .question-warp{float: left;padding-bottom: 50px;}
+    .underline{margin-left: 0px;}
+    .symbol-warp{float: left;width: 925px;height: auto;border-bottom: 1px solid #dedede;min-height: 65px;}
+    .matter-warp1{height:auto;}
+    .matter-right {float:left;line-height:65px;height: 65px;width: 10%;cursor: pointer;}
+</style>
+ <div class="about-banner"><img src="__PUBLIC__/Home/style/images/guarantee/help.jpg" width="100%"/></div>
+<div id="about_wrap">
+    <div id="about_main">
+        <div class="bread1_nav">
+            <div class="bread_nav"><a class="home" href="javascript:;"></a><a href="/">首页</a>&nbsp;&nbsp;>&nbsp;&nbsp;<a href="{:U('Article/help_center')}">帮助中心</a> > <a href="{:U()}">常见问题</a></div>
+        </div>
+        <div id="about_left">
+            <ul class="about_leftsum">
+                <include file="navleft_helpcenter"/>
+            </ul>
+        </div>
+        <div id="about_right" style="padding-top:0px;">
+            <div class="title-warp">
+                <div class="underline">常见问题</div>
+                <div class="site-warp">
+                    <form id="form1" action="" method="get">
+                        <input class="choice-site" name="search_key_word" value="{:I('search_key_word', '')}" tyle="text"/>
+                    </form>
+                    <a class="search" onclick="$('#form1').submit()" href="javascript:;"><img src="__PUBLIC__/Home/style/images/guarantee/search.png"/></a>
+                </div>
+            </div>
+            <if condition="!empty($common_problems_list)">
+                <?php $i=0; ?>
+                <foreach name="common_problems_list" key="k1" item="v1">
+                    <div class="matter-warp matter-warp1" <if condition="$i eq count($platform_intro_list)-1">style="border:none"</if>>
+                        <div class="symbol-warp">
+                            <div class="matter" onclick="turn_tab($(this).next('.matter-right').find('._c_symbol'))" style="cursor: pointer;">{$k1}</div>
+                            <div class="matter-right" onclick="turn_tab($(this).find('._c_symbol'))">
+                                <div class="symbol _c_symbol">+</div>
+                            </div>
+                            <div class="question-warp" style="display:none;">
+                                <foreach name="v1"  key="k2" item="v2">
+                                    <div class="question-list">
+                                        <div class="question"><span class="q">Q：</span>{$v2.title}</div>
+                                        <div class="answer">{$v2.content}</div>
+                                    </div>
+                                </foreach>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $i++; ?>
+                </foreach>
+            <else />
+                <div style="margin-top: 30px;margin-left: auto;margin-right: auto;">
+                    <p style="margin-left: 50px;color: #696969;font-size: 14px;">该搜索关键字下没有找到内容，请修改关键字后重试。</p>
+                </div>
+            </if>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    /*
+     * 切换标签页
+     */
+    function turn_tab(dom) {
+        $('.question-warp').hide();
+        if (dom.html() == '-') {
+            dom.html('+');
+        } else {
+            $('.symbol').html('+');
+            dom.html('-');
+            dom.parents('.matter-warp').find('.question-warp').show();
+        }
+    }
+</script>
+<include file="Public:footer"/>
